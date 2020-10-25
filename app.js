@@ -16,7 +16,6 @@ require('dotenv').config();
 
 /**** Local modules */
 const config = require("./src/config/config");
-const { errorMessages } = require("./src/helpers/errorMessages");
 const utils = require("./src/helpers/utils");
 /**** Local modules */
 
@@ -31,7 +30,7 @@ if (!fs.existsSync(logDir)) {
   fs.writeFileSync(logDir, '', (err) => {
     if (err) console.error(err);
 
-    console.log("The file was succesfully saved!");
+    console.info("The file was succesfully saved!");
   });
 }
 const accessLogStream = fs.createWriteStream(logDir, { flags: 'a' });
@@ -110,7 +109,7 @@ app.use("/api", require('./src/routes/routes'));
 
 /* Handling invalid route */
 app.use("/", function (req, res) {
-  res.status(404).send(utils.responseMsg(errorMessages.routeNotFound));
+  res.status(404).send(utils.responseMsg("Route not found!"));
 });
 
 /**
