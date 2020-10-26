@@ -6,7 +6,8 @@ const User = require('../models/User');
 
 exports.jwtLogin = async (req, res, next) => {
   try {
-    const userData = await User.findOne({ username: req.body.username });
+    // const userData = await User.findOne({ username: req.body.username });
+    // const userData = await User.findAll({ where:{username: req.body.username }});
     let token = '';
     if (userData && await bcrypt.compare(req.body.password, userData.password)) {
       token = jwt.sign(

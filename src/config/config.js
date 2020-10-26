@@ -33,7 +33,7 @@ config.client = process.env.CLIENT_URL || '*';
 /* Swagger Definition */
 config.swaggerDefinition = {
   info: {
-    title: 'Node Mongo Boilerplate',
+    title: 'Node Global Boilerplate',
     version: '1.0.0',
     description: '',
   },

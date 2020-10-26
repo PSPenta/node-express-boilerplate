@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+const { model } = require("../helpers/utils");
+
 // User define DB Creadentials
 const dbCredentials = require('./config').db;
 const database = process.env.DB_DRIVER || '';
@@ -37,12 +39,12 @@ if (database.toLowerCase() === 'mongodb') {
   });
 
   db.on('disconnected', function () {
-    console.warn('-> Mongoose disconnected');
+    console.warn('-> Mongoose disconnected!');
   });
 
   process.on('SIGINT', function () {
     db.close(function () {
-      console.warn('-> Mongoose disconnected through app termination');
+      console.warn('-> Mongoose disconnected through app termination!');
       process.exit(0);
     });
   });
@@ -73,6 +75,10 @@ if (database.toLowerCase() === 'mongodb') {
       acquire: 30000,
       idle: 10000,
     },
+    define: {
+      timestamps: true,
+      underscored: true
+    }
   });
 
   sequelize
@@ -82,12 +88,33 @@ if (database.toLowerCase() === 'mongodb') {
         `Sequelize connection started on database "${name}" from "${dialect}"`
       )
     )
-    .catch((err) => console.error(`Sequelize connection error: ${err}`));
+    .catch((err) => console.error(`-> Sequelize connection error: ${err}`));
 
   process.on('SIGINT', function () {
-    console.warn('-> Sequelize disconnected through app termination');
+    console.warn('-> Sequelize disconnected through app termination!');
     process.exit(0);
   });
+
+  /** Example Relationships */
+  // Sequelize One-To-One relationship
+  // model('User').hasOne(model('Profile'));
+  // model('Profile').belongsTo(model('User'), {constraints: true, onDelete: 'CASCADE'});
+
+  // Sequelize One-To-Many relationship
+  // model('User').hasMany(model('Product'));
+  // model('Product').belongsTo(model('User'), {constraints: true, onDelete: 'CASCADE'});
+
+  // Sequelize Many-To-Many relationship
+  // model('User').belongsToMany(model('Product'), {through: model('UserProducts'), constraints: true, onDelete: 'CASCADE'});
+  // model('Product').belongsToMany(model('User'), {through: model('UserProducts'), constraints: true, onDelete: 'CASCADE'});
+
+  sequelize.sync()
+  .then(() =>
+    console.info(
+      `Sequelize connection synced and relationships established.`
+    )
+  )
+  .catch(err => console.error(err));
 
   //Exported the database connection to be imported at the server
   exports.default = sequelize;
