@@ -21,19 +21,19 @@ _version:-_ `>= v10.16.3`
 
 	**For SQL DB install [Sequelize](https://sequelize.org/v5/) package**
 	```bash
-	$ npm i -S sequelize sequelize-cli sequelize-paginate
+	$ npm i -S sequelize sequelize-paginate
 	```
 
-	**Sequelize supports multiple dialects for DBMS**
+	**Sequelize supports multiple dialects for RDBMS**
 	**One of the following command with respect to database:**
 	```bash
-	$ npm install --save pg pg-hstore # Postgres
-	$ npm install --save mysql2
-	$ npm install --save mariadb
-	$ npm install --save sqlite3
-	$ npm install --save tedious # Microsoft SQL Server
+	$ npm install --save pg pg-hstore 	# postgres dialect
+	$ npm install --save mysql2 		# mysql dialect
+	$ npm install --save mariadb 		# mariadb dialect
+	$ npm install --save sqlite3 		# sqlite dialect
+	$ npm install --save tedious 		# mssql dialect
 	```
-3. After that, create models to complete the database setup
+3. After that, if using Sequelize, create database to complete the DB connection. *(if you want to use DB migrations, you can use sequelize-cli)*
 
 4. To run tests
 	```bash
