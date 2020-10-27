@@ -33,7 +33,10 @@ _version:-_ `>= v10.16.3`
 	$ npm install --save sqlite3 		# sqlite dialect
 	$ npm install --save tedious 		# mssql dialect
 	```
-3. After that, if using Sequelize, create database to complete the DB connection. *(if you want to use DB migrations, you can use sequelize-cli)*
+3. After that, if using Sequelize, create database to complete the DB connection. *(if you want to use DB migrations, you can use [sequelize-cli](https://sequelize.org/master/manual/migrations.html) as a dev dependency)*
+	```bash
+	$ npm install --save-dev sequelize-cli
+	```
 
 4. To run tests
 	```bash
