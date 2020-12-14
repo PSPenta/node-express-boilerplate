@@ -29,21 +29,17 @@ if (database.toLowerCase() === 'mongodb') {
   // Db Connection
   let db = mongoose.connection;
 
-  db.on('connected', function () {
+  db.on('connected', () => {
     console.info('Mongoose connected to ' + dbURI);
     fs.readdirSync(path.dirname(require.main.filename) + '/src/models').forEach(file => require(path.dirname(require.main.filename) + '/src/models/' + file));
   });
 
-  db.on('error', function (err) {
-    console.error('-> Mongoose connection error: ' + err);
-  });
+  db.on('error', (err) => console.error('-> Mongoose connection error: ' + err));
 
-  db.on('disconnected', function () {
-    console.warn('-> Mongoose disconnected!');
-  });
+  db.on('disconnected', () => console.warn('-> Mongoose disconnected!'));
 
-  process.on('SIGINT', function () {
-    db.close(function () {
+  process.on('SIGINT', () => {
+    db.close(() => {
       console.warn('-> Mongoose disconnected through app termination!');
       process.exit(0);
     });
@@ -90,7 +86,7 @@ if (database.toLowerCase() === 'mongodb') {
     )
     .catch((err) => console.error(`-> Sequelize connection error: ${err}`));
 
-  process.on('SIGINT', function () {
+  process.on('SIGINT', () => {
     console.warn('-> Sequelize disconnected through app termination!');
     process.exit(0);
   });

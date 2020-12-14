@@ -108,9 +108,7 @@ app.use(
 app.use("/api", require('./src/routes/routes'));
 
 /* Handling invalid route */
-app.use("/", function (req, res) {
-  res.status(404).send(utils.responseMsg("Route not found!"));
-});
+app.use("/", (req, res) => res.status(404).send(utils.responseMsg("Route not found!")));
 
 /**
  * Listening to port

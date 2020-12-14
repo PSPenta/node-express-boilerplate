@@ -5,9 +5,7 @@
  *
  * @return {Any} data which is given if it exists or False
  */
-exports.model = (model) => {
-  return require(`../models/${model}`);
-}
+exports.model = (model) => require(`../models/${model}`);
 
 /**
  * Pass Object Or Array Or String Or Number and find if it is empty or not, Null Or Undefined also gives false
@@ -46,12 +44,12 @@ exports.checkIfDataExists = (data) => {
 
 /**
  * Creates formatted response.
- * 
+ *
  * @param {String} errMsg
  * @param {Boolean} successStatus
  * @param {Array or Object} data
  * @param {Boolean} paginated
- * 
+ *
  * @returns {Object}
  */
 exports.responseMsg = (errMsg, successStatus, data, paginated) => {
