@@ -1,12 +1,12 @@
 let config = {};
 
-/* mongodb connection configuration */
+/** mongodb connection configuration */
 let noSqlDbConfig = {
   url: process.env.DB_URL || 'mongodb://localhost:27017/',
   name: process.env.DB_NAME || 'myDB',
 };
 
-/* sql connection configuration */
+/** sql connection configuration */
 let sqlDbConfig = {
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || '',
@@ -21,7 +21,7 @@ config.db = {
   sqlDbConfig,
 };
 
-/* JWT Authentication Credentials  */
+/** JWT Authentication Credentials */
 config.jwt = {
   secret: process.env.JWT_SECRET  || 'secret',
   expireIn: process.env.JWT_EXPIRE_IN || '1d',
@@ -30,7 +30,7 @@ config.jwt = {
 
 config.client = process.env.CLIENT_URL || '*';
 
-/* Swagger Definition */
+/** Swagger Definition */
 config.swaggerDefinition = {
   info: {
     title: 'Node Global Boilerplate',
@@ -51,7 +51,7 @@ config.swaggerDefinition = {
 config.swaggerOptions = {
   customSiteTitle: '[Project Title]',
   customCss: '',
-  customfavIcon: '',
+  customfavIcon: ''
 };
 
 module.exports = config;

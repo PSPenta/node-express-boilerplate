@@ -1,23 +1,20 @@
-const fs = require('fs');
-const path = require('path');
+const { readdirSync } = require('fs');
+const { dirname } = require('path');
 
-const { model } = require("../helpers/utils");
-
-// User define DB Creadentials
-const dbCredentials = require('./config').db;
+/** User define DB Creadentials */
+const { db: { noSqlDbConfig, sqlDbConfig } } = require('./config');
 const database = process.env.DB_DRIVER || '';
 
 if (database.toLowerCase() === 'mongodb') {
-
-  //Bring in the mongoose module
+  // Bring in the mongoose module
   const mongoose = require('mongoose');
-  const { url, name } = dbCredentials.noSqlDbConfig;
+  const { url, name } = noSqlDbConfig;
   const dbURI = url + name;
 
-  //console to check what is the dbURI refers to
+  // console to check what is the dbURI refers to
   console.info('Database URL is => ', dbURI);
 
-  //Open the mongoose connection to the database
+  // Open the mongoose connection to the database
   mongoose.connect(dbURI, {
     config: {
       autoIndex: false,
@@ -31,10 +28,10 @@ if (database.toLowerCase() === 'mongodb') {
 
   db.on('connected', () => {
     console.info('Mongoose connected to ' + dbURI);
-    fs.readdirSync(path.dirname(require.main.filename) + '/src/models').forEach(file => require(path.dirname(require.main.filename) + '/src/models/' + file));
+    readdirSync(dirname(require.main.filename) + '/src/models').forEach(file => require(dirname(require.main.filename) + '/src/models/' + file));
   });
 
-  db.on('error', (err) => console.error('-> Mongoose connection error: ' + err));
+  db.on('error', err => console.error('-> Mongoose connection error: ' + err));
 
   db.on('disconnected', () => console.warn('-> Mongoose disconnected!'));
 
@@ -45,10 +42,10 @@ if (database.toLowerCase() === 'mongodb') {
     });
   });
 
-  //Exported the database connection to be imported at the server
+  // Exported the database connection which is to be imported at the server
   exports.default = db;
 } else if (database.toLowerCase() === 'sql') {
-  //Bring in the sequelize module
+  // Bring in the sequelize module
   const Sequelize = require('sequelize');
   const {
     name,
@@ -57,9 +54,9 @@ if (database.toLowerCase() === 'mongodb') {
     host,
     port,
     dialect,
-  } = dbCredentials.sqlDbConfig;
+  } = sqlDbConfig;
 
-  //logging: false because sequelize by default log all DB activities in console which will unneccessarily flood the console.
+  // logging: false because sequelize by default log all DB activities in console which will unneccessarily flood the console.
   const sequelize = new Sequelize(name, username, password, {
     host,
     port,
@@ -84,35 +81,33 @@ if (database.toLowerCase() === 'mongodb') {
         `Sequelize connection started on database "${name}" from "${dialect}"`
       )
     )
-    .catch((err) => console.error(`-> Sequelize connection error: ${err}`));
+    .catch(err => console.error(`Sequelize connection error: ${err}`));
 
   process.on('SIGINT', () => {
     console.warn('-> Sequelize disconnected through app termination!');
     process.exit(0);
   });
 
-  /** Example Relationships */
-  // Sequelize One-To-One relationship
+  // const { model } = require('../helpers/utils');
+  /**** Establishing Relationships */
+  /** Sequelize One-To-One relationship */
   // model('User').hasOne(model('Profile'));
   // model('Profile').belongsTo(model('User'), {constraints: true, onDelete: 'CASCADE'});
 
-  // Sequelize One-To-Many relationship
+  /** Sequelize One-To-Many relationship */
   // model('User').hasMany(model('Product'));
   // model('Product').belongsTo(model('User'), {constraints: true, onDelete: 'CASCADE'});
 
-  // Sequelize Many-To-Many relationship
+  /** Sequelize Many-To-Many relationship */
   // model('User').belongsToMany(model('Product'), {through: model('UserProducts'), constraints: true, onDelete: 'CASCADE'});
   // model('Product').belongsToMany(model('User'), {through: model('UserProducts'), constraints: true, onDelete: 'CASCADE'});
+  /**** Establishing Relationships */
 
   sequelize.sync()
-  .then(() =>
-    console.info(
-      `Sequelize connection synced and relationships established.`
-    )
-  )
-  .catch(err => console.error(err));
+    .then(() => console.info(`Sequelize connection synced and relationships established.`))
+    .catch(err => console.error(err));
 
-  //Exported the database connection to be imported at the server
+  // Exported the database connection which is to be imported at the server
   exports.default = sequelize;
 } else {
   console.warn(

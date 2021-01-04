@@ -5,7 +5,7 @@
  *
  * @return {Any} data which is given if it exists or False
  */
-exports.model = (model) => require(`../models/${model}`);
+exports.model = model => require(`../models/${model}`);
 
 /**
  * Pass Object Or Array Or String Or Number and find if it is empty or not, Null Or Undefined also gives false
@@ -15,7 +15,7 @@ exports.model = (model) => require(`../models/${model}`);
  *
  * @return {Any} data which is given if it exists or False
  */
-exports.checkIfDataExists = (data) => {
+exports.checkIfDataExists = data => {
   let flagDataExists;
   if (data === 0 ? '0' : data) {
     switch (data.constructor) {

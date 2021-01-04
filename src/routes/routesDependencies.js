@@ -1,6 +1,5 @@
 module.exports = {
   controllers: {
-    // List Controllers
     authClient: require('../controllers/authController')
   },
   middlewares: {

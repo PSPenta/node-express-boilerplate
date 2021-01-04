@@ -1,16 +1,15 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const { compare } = require('bcrypt');
+const { sign } = require('jsonwebtoken');
 
 const { responseMsg } = require('../helpers/utils');
-const User = require('../models/User');
 
 exports.jwtLogin = async (req, res, next) => {
   try {
     // const userData = await User.findOne({ username: req.body.username });
     // const userData = await User.findAll({ where:{username: req.body.username }});
     let token = '';
-    if (userData && await bcrypt.compare(req.body.password, userData.password)) {
-      token = jwt.sign(
+    if (userData && await compare(req.body.password, userData.password)) {
+      token = sign(
         {
           username: userData.username,
           userId: userData._id.toString()
