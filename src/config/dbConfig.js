@@ -84,19 +84,27 @@ if (database.toLowerCase() === 'mongodb') {
     process.exit(0);
   });
 
-  // const { model } = require('../helpers/utils');
+  /**
+   * Pass name of the model defined in Sequelize Schema and get it imported
+   *
+   * @param {String} model Name of the model
+   *
+   * @return {Any} data which is given if it exists or False
+   */
+  exports.model = model => require(`../models/${model}`)(sequelize, Sequelize);
+
   /**** Establishing Relationships */
   /** Sequelize One-To-One relationship */
-  // model('User').hasOne(model('Profile'));
-  // model('Profile').belongsTo(model('User'), {constraints: true, onDelete: 'CASCADE'});
+  // this.model('User').hasOne(this.model('Profile'));
+  // this.model('Profile').belongsTo(this.model('User'), { constraints: true, onDelete: 'CASCADE' });
 
   /** Sequelize One-To-Many relationship */
-  // model('User').hasMany(model('Product'));
-  // model('Product').belongsTo(model('User'), {constraints: true, onDelete: 'CASCADE'});
+  // this.model('User').hasMany(this.model('Product'));
+  // this.model('Product').belongsTo(this.model('User'), { constraints: true, onDelete: 'CASCADE' });
 
   /** Sequelize Many-To-Many relationship */
-  // model('User').belongsToMany(model('Product'), {through: model('UserProducts'), constraints: true, onDelete: 'CASCADE'});
-  // model('Product').belongsToMany(model('User'), {through: model('UserProducts'), constraints: true, onDelete: 'CASCADE'});
+  // this.model('User').belongsToMany(this.model('Product'), { through: this.model('UserProducts'), constraints: true, onDelete: 'CASCADE' });
+  // this.model('Product').belongsToMany(this.model('User'), { through: this.model('UserProducts'), constraints: true, onDelete: 'CASCADE' });
   /**** Establishing Relationships */
 
   sequelize.sync()

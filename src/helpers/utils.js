@@ -1,13 +1,4 @@
 /**
- * Pass name of the model defined in Sequelize Schema and get it imported
- *
- * @param {String} model Name of the model
- *
- * @return {Any} data which is given if it exists or False
- */
-exports.model = model => require(`../models/${model}`);
-
-/**
  * Pass Object Or Array Or String Or Number and find if it is empty or not, Null Or Undefined also gives false
  *
  * @param  {Any} data data to be checked against
