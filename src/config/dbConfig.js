@@ -31,13 +31,13 @@ if (database.toLowerCase() === 'mongodb') {
     readdirSync(dirname(require.main.filename) + '/src/models').forEach(file => require(dirname(require.main.filename) + '/src/models/' + file));
   });
 
-  db.on('error', err => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`));
+  db.on('error', err => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`, '\033[37m'));
 
-  db.on('disconnected', () => console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected!'));
+  db.on('disconnected', () => console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected!', '\033[37m'));
 
   process.on('SIGINT', () => {
     db.close(() => {
-      console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected through app termination!');
+      console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected through app termination!', '\033[37m');
       process.exit(0);
     });
   });
@@ -77,10 +77,10 @@ if (database.toLowerCase() === 'mongodb') {
   sequelize
     .authenticate()
     .then(() => console.info(`Sequelize connection started on database "${name}" from "${dialect}"`))
-    .catch(err => console.error('\x1B[31m', `=> Sequelize connection error: ${err}`));
+    .catch(err => console.error('\x1B[31m', `=> Sequelize connection error: ${err}`, '\033[37m'));
 
   process.on('SIGINT', () => {
-    console.warn('\x1b[33m%s\x1b[0m', '-> Sequelize disconnected through app termination!');
+    console.warn('\x1b[33m%s\x1b[0m', '-> Sequelize disconnected through app termination!', '\033[37m');
     process.exit(0);
   });
 
@@ -109,11 +109,11 @@ if (database.toLowerCase() === 'mongodb') {
 
   sequelize.sync()
     .then(() => console.info(`Sequelize connection synced and relationships established.`))
-    .catch(err => console.error('\x1B[31m', err));
+    .catch(err => console.error('\x1B[31m', err, '\033[37m'));
 
   // Exported the database connection which is to be imported at the server
   exports.default = sequelize;
 } else {
-  console.warn('\x1b[33m%s\x1b[0m', '-> Application is running without database connection!');
+  console.warn('\x1b[33m%s\x1b[0m', '-> Application is running without database connection!', '\033[37m');
   process.exit(0);
 }
