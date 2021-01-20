@@ -7,7 +7,7 @@ exports.jwtAuth = (req, res, next) => {
     if (req.headers.authorization) {
       let decodedToken = verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-          console.error('JWT Error: ', err);
+          console.error('JWT Error:', err);
           return res.status(440).json(responseMsg('Your login session is either expired or the token is invalid, please try logging in again!'));
         }
         return decoded;
