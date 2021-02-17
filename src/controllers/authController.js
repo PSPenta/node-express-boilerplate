@@ -5,8 +5,8 @@ const { responseMsg } = require('../helpers/utils');
 
 exports.jwtLogin = async (req, res, next) => {
   try {
-    // const userData = await User.findOne({ username: req.body.username });
-    // const userData = await User.findAll({ where:{username: req.body.username }});
+    // const userData = await model('User').findOne({ username: req.body.username });
+    // const userData = await model('User').findAll({ where: { username: req.body.username } });
     let token = '';
     if (userData && await compare(req.body.password, userData.password)) {
       token = sign(
