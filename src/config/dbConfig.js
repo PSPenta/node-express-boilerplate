@@ -2,7 +2,7 @@ const { readdirSync } = require('fs');
 const { dirname } = require('path');
 
 /** User define DB Creadentials */
-const { db: { noSqlDbConfig, sqlDbConfig } } = require('./config');
+const { db: { noSqlDbConfig, sqlDbConfig } } = require('./serverConfig');
 const database = process.env.DB_DRIVER || '';
 
 if (database.toLowerCase() === 'mongodb') {

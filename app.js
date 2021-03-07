@@ -14,7 +14,7 @@ require('dotenv').config();
 /**** 3rd party modules */
 
 /**** Local modules */
-const { swaggerDefinition, swaggerOptions } = require('./src/config/config');
+const { swaggerDefinition, swaggerOptions } = require('./src/config/serverConfig');
 const { responseMsg } = require('./src/helpers/utils');
 /**** Local modules */
 
