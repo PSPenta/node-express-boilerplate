@@ -102,7 +102,7 @@ app.use(require('xss-clean')());
 /** Express Rate Limit for DOS attack prevention */
 app.use(rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 100 // limit each IP to 100 requests per windowMs
 }));
 
 /** serve static files */
@@ -120,8 +120,8 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerJsDoc({
     swaggerDefinition,
-    apis: ['./src/routes/*.js'],
-  }), swaggerOptions),
+    apis: ['./src/routes/*.js']
+  }), swaggerOptions)
 );
 
 /** Configuring Routes */

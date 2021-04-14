@@ -7,7 +7,7 @@ exports.jwtLogin = async (req, res, next) => {
   try {
     // const userData = await model('User').findOne({ username: req.body.username });
     // const userData = await model('User').findAll({ where: { username: req.body.username } });
-// Note: If using Sequelize, update userData to userData[0] for all the following occurrances
+    // Note: If using Sequelize, update userData to userData[0] for all the following occurrances
     let token = '';
     if (userData && await compare(req.body.password, userData.password)) {
       token = sign(
@@ -20,12 +20,11 @@ exports.jwtLogin = async (req, res, next) => {
       );
     }
     if (token) {
-      return res.json(responseMsg(null, true, { 'token': token }));
-    } else {
-      return res.status(404).json(responseMsg('User not found!'));
+      return res.json(responseMsg(null, true, { token }));
     }
+    return res.status(404).json(responseMsg('User not found!'));
   } catch (error) {
     console.error(error);
     return res.status(500).json(responseMsg('Something went wrong!'));
   }
-}
+};

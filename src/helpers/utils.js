@@ -1,36 +1,35 @@
 /**
- * Pass Object Or Array Or String Or Number and find if it is empty or not, Null Or Undefined also gives false
+ * Pass Object Or Array Or String Or Number and find if it is empty or not,
+ * Null Or Undefined also gives false
  *
  * @param  {Any} data data to be checked against
  * @param  {function} cb callback
  *
  * @return {Any} data which is given if it exists or False
  */
-exports.checkIfDataExists = data => {
+exports.checkIfDataExists = (data) => {
   let flagDataExists;
   if (data === 0 ? '0' : data) {
     switch (data.constructor) {
-      case Object:
-        flagDataExists = Object.keys(data).length ? true : false;
+    case Object:
+      flagDataExists = !!Object.keys(data).length;
       break;
 
-      case Array:
-        flagDataExists = data.length ? true : false;
+    case Array:
+      flagDataExists = !!data.length;
       break;
 
-      default:
-        flagDataExists = true;
+    default:
+      flagDataExists = true;
       break;
     }
 
     if (flagDataExists) {
       return true;
-    } else {
-      return false;
     }
-  } else {
     return false;
   }
+  return false;
 };
 
 /**
@@ -45,9 +44,9 @@ exports.checkIfDataExists = data => {
  */
 exports.responseMsg = (errMsg, successStatus, data, paginated) => {
   const responseObj = {
-    'success': successStatus || false,
-    'error': errMsg || null,
-    'data': data || null
+    success: successStatus || false,
+    error: errMsg || null,
+    data: data || null
   };
 
   if (errMsg) {
@@ -60,10 +59,13 @@ exports.responseMsg = (errMsg, successStatus, data, paginated) => {
     responseObj.totalDocs = data.totalDocs || data.total;
     responseObj.limit = data.limit;
     responseObj.totalPages = data.totalPages || data.pages;
-    responseObj.hasPrevPage = data.hasPrevPage || (data.page > 1 ? true : false);
-    responseObj.hasNextPage = data.hasNextPage || (!data.page || data.page < data.pages ? true : false);
+    responseObj.hasPrevPage = data.hasPrevPage || (data.page > 1);
+    responseObj.hasNextPage = data.hasNextPage || (!!(!data.page || data.page < data.pages));
     responseObj.prevPage = data.prevPage || (data.page > 1 ? data.page : null);
-    responseObj.nextPage = data.nextPage || (!data.page || data.page < data.pages ? (data.page || 2) : null);
+    responseObj.nextPage = data.nextPage || (
+      !data.page
+      || data.page < data.pages ? (data.page || 2) : null
+    );
   } else {
     responseObj.data = data.docs || data;
   }

@@ -7,7 +7,7 @@
     "start": "nodemon app",
     "pretest": "eslint",
     "test": "mocha --timeout 10000 --exit",
-    "lint": "./node_modules/.bin/eslint",
+    "lint": "./node_modules/.bin/eslint --fix",
     "lint-staged": "lint-staged",
     "update:packages": "npm install --save-dev npm-check-updates && ncu -u && npm update"
   },

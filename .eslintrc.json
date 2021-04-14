@@ -13,6 +13,10 @@
     "ecmaVersion": 2018
   },
   "rules": {
+    "comma-dangle": [
+      "error",
+      "never"
+    ],
     "indent": [
       "error",
       2
@@ -21,6 +25,19 @@
       "error",
       "unix"
     ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "error",
+          "info",
+          "warn"
+        ]
+      }
+    ],
+    "no-multi-spaces": [
+      "error"
+    ],
     "quotes": [
       "error",
       "single"
@@ -28,9 +45,6 @@
     "semi": [
       "error",
       "always"
-    ],
-    "no-multi-spaces": [
-      "error"
     ]
   }
 }
