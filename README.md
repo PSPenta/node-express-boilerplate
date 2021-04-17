@@ -46,6 +46,10 @@ _version:-_ `>= v10.16.3`
 	```bash
 	$ npm start
 	```
+5. To test code against linting standards
+	```bash
+	$ npm run lint <file_name>
+	```
 
 ### Local Authentication Service Setup
 1. Add environment variables in *.env* file referencing from *env.example* file.
