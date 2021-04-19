@@ -1,9 +1,6 @@
-/** ** Core modules */
 const fs = require('fs');
 const { join } = require('path');
-/** ** Core modules */
 
-/** ** 3rd party modules */
 const { urlencoded, json: bodyParserJson } = require('body-parser');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
@@ -11,12 +8,9 @@ const morgan = require('morgan');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
-/** ** 3rd party modules */
 
-/** ** Local modules */
 const { swaggerDefinition, swaggerOptions } = require('./src/config/serverConfig');
 const { responseMsg } = require('./src/helpers/utils');
-/** ** Local modules */
 
 const app = express();
 
