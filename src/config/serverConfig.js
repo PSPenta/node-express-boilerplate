@@ -48,6 +48,7 @@ config.swaggerDefinition = {
     }
   }
 };
+
 config.swaggerOptions = {
   customSiteTitle: '[Project Title]',
   customCss: '',
