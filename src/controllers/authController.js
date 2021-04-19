@@ -3,7 +3,7 @@ const { sign } = require('jsonwebtoken');
 
 const { responseMsg } = require('../helpers/utils');
 
-exports.jwtLogin = async (req, res, next) => {
+exports.jwtLogin = async (req, res) => {
   try {
     // const userData = await model('User').findOne({ username: req.body.username });
     // const userData = await model('User').findAll({ where: { username: req.body.username } });

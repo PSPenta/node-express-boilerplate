@@ -2,6 +2,7 @@ const { verify } = require('jsonwebtoken');
 
 const { responseMsg } = require('../helpers/utils');
 
+// eslint-disable-next-line consistent-return
 exports.jwtAuth = (req, res, next) => {
   try {
     if (req.headers.authorization) {
