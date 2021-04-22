@@ -90,13 +90,12 @@ app.set('port', process.env.PORT || 8000);
 app.set('app URL', process.env.APP_URL || 'localhost:8000');
 app.set('title', process.env.APP_NAME);
 app.set('query parser', 'extended');
+app.enable('etag'); // use strong etags
+app.set('etag', 'strong');
 /** ** Best practices app settings */
 
 /** serve static files */
 app.use(express.static(join(__dirname, 'src/public')));
-
-app.enable('etag'); // use strong etags
-app.set('etag', 'strong');
 
 /** Importing database connection when server starts */
 require('./src/config/dbConfig');
