@@ -56,34 +56,6 @@ app.use(require('compression')());
  */
 app.use(require('express-status-monitor')());
 
-/** Best practices app settings */
-app.set('port', process.env.HTTP_PORT || 8000);
-app.set('app URL', process.env.APP_URL || 'localhost:8000');
-app.set('title', process.env.APP_NAME);
-app.set('query parser', 'extended');
-
-/** Importing database connection when server starts */
-require('./src/config/dbConfig');
-
-/** ** Setting up the CORS for app */
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL || '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, Authorization, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
-/** ** Setting up the CORS for app */
-
-/** Form encryption application/x-www-form-urlencoded */
-app.use(urlencoded({ limit: '50mb', extended: false }));
-
-/** POST routes/APIs data in application/json format */
-app.use(bodyParserJson({ limit: '50mb' }));
-
 /**
  * @name xss-clean
  * @description This middleware will sanitize user input
@@ -93,17 +65,41 @@ app.use(bodyParserJson({ limit: '50mb' }));
  */
 app.use(require('xss-clean')());
 
+/**
+ * @name cors
+ * @description This middleware will handle all the cors setting for our app.
+ * This middleware can be used to enable CORS with various options.
+ * For further information: https://www.npmjs.com/package/cors
+ */
+app.use(require('cors')({ origin: process.env.CLIENT_URL }));
+
+/** Form encryption application/x-www-form-urlencoded */
+app.use(urlencoded({ limit: '50mb', extended: false }));
+
+/** POST routes/APIs data in application/json format */
+app.use(bodyParserJson({ limit: '50mb' }));
+
 /** Express Rate Limit for DOS attack prevention */
 app.use(rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 100 // limit each IP to 100 requests per windowMs
 }));
 
+/** ** Best practices app settings */
+app.set('port', process.env.PORT || 8000);
+app.set('app URL', process.env.APP_URL || 'localhost:8000');
+app.set('title', process.env.APP_NAME);
+app.set('query parser', 'extended');
+/** ** Best practices app settings */
+
 /** serve static files */
 app.use(express.static(join(__dirname, 'src/public')));
 
 app.enable('etag'); // use strong etags
 app.set('etag', 'strong');
+
+/** Importing database connection when server starts */
+require('./src/config/dbConfig');
 
 /**
  * @name Swagger Documentation
