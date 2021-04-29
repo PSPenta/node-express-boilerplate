@@ -34,10 +34,10 @@ exports.jwtLogout = async (req, res) => {
     if (req.headers.authorization) {
       const token = req.headers.authorization.split(' ')[1];
       if (token) {
-        // const blacklistedToken = await model('Blacklist').create({
-        //   token,
-        //   user: req.userId
-        // });
+        await model('Blacklist').create({
+          token,
+          user: req.userId
+        });
       }
       return res.json(responseMsg(null, true, 'Successfully logged out!'));
     }
