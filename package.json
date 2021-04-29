@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.6",
     "express-status-monitor": "^1.2.3",
-    "express-validator": "^6.10.0",
+    "express-validator": "^6.10.1",
     "helmet": "^4.5.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
@@ -33,10 +33,10 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
-    "eslint": "^7.24.0",
+    "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
     "mocha": "^8.3.2",
     "nodemon": "^2.0.7",
-    "npm-check-updates": "^11.5.1"
+    "npm-check-updates": "^11.5.4"
   }
 }

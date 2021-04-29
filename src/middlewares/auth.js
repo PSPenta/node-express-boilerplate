@@ -6,18 +6,25 @@ const { responseMsg } = require('../helpers/utils');
 exports.jwtAuth = (req, res, next) => {
   try {
     if (req.headers.authorization) {
-      const decodedToken = verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-          console.error('JWT Error:', err);
-          return res.status(440).json(responseMsg('Your login session is either expired or the token is invalid, please try logging in again!'));
+      const token = req.headers.authorization.split(' ')[1];
+      // const blacklistedToken = await model('Blacklist').findOne({ token: token });
+      // const blacklistedToken = await model('Blacklist').findAll({ where: { token: token } });
+      if (!blacklistedToken) {
+        const decodedToken = verify(token, process.env.JWT_SECRET, (err, decoded) => {
+          if (err) {
+            console.error('JWT Error:', err);
+            return res.status(440).json(responseMsg('Your login session is either expired or the token is invalid, please try logging in again!'));
+          }
+          return decoded;
+        });
+        if (decodedToken) {
+          req.userId = decodedToken.userId;
+          next();
+        } else {
+          return res.status(401).json(responseMsg('Invalid token!'));
         }
-        return decoded;
-      });
-      if (decodedToken) {
-        req.userId = decodedToken.userId;
-        next();
       } else {
-        return res.status(401).json(responseMsg('Invalid token!'));
+        return res.status(401).json(responseMsg('Token invalid!'));
       }
     } else {
       return res.status(401).json(responseMsg('Not authenticated!'));
