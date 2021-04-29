@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { compare } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 
@@ -13,6 +14,7 @@ exports.jwtLogin = async (req, res) => {
       token = sign(
         {
           username: userData.username,
+          // eslint-disable-next-line no-underscore-dangle
           userId: userData._id.toString()
         },
         process.env.APP_KEY,

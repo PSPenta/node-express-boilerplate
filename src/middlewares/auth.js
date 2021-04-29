@@ -9,6 +9,7 @@ exports.jwtAuth = (req, res, next) => {
       const token = req.headers.authorization.split(' ')[1];
       // const blacklistedToken = await model('Blacklist').findOne({ token: token });
       // const blacklistedToken = await model('Blacklist').findAll({ where: { token: token } });
+      // eslint-disable-next-line no-undef
       if (!blacklistedToken) {
         const decodedToken = verify(token, process.env.JWT_SECRET, (err, decoded) => {
           if (err) {
