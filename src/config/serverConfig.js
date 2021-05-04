@@ -52,7 +52,7 @@ config.swaggerDefinition = {
 config.swaggerOptions = {
   customSiteTitle: '[Project Title]',
   customCss: '',
-  customfavIcon: ''
+  customFavIcon: ''
 };
 
 module.exports = config;

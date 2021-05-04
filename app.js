@@ -23,7 +23,7 @@ if (!fs.existsSync(logDir)) {
   fs.writeFileSync(logDir, '', (err) => {
     if (err) console.error(err);
 
-    console.info('The log file is created succesfully!');
+    console.info('The log file is created successfully!');
   });
 }
 const accessLogStream = fs.createWriteStream(logDir, { flags: 'a' });

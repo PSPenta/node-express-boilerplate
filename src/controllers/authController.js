@@ -8,7 +8,7 @@ exports.jwtLogin = async (req, res) => {
   try {
     // const userData = await model('User').findOne({ username: req.body.username });
     // const userData = await model('User').findAll({ where: { username: req.body.username } });
-    // Note: If using Sequelize, update userData to userData[0] for all the following occurrances
+    // Note: If using Sequelize, update userData to userData[0] for all the following occurrences
     let token = '';
     if (userData && await compare(req.body.password, userData.password)) {
       token = sign(

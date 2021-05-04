@@ -1,7 +1,7 @@
 const { readdirSync } = require('fs');
 const { dirname } = require('path');
 
-/** User define DB Creadentials */
+/** User define DB Credentials */
 const { db: { noSqlDbConfig, sqlDbConfig } } = require('./serverConfig');
 const database = process.env.DB_DRIVER || '';
 
@@ -56,7 +56,7 @@ if (database.toLowerCase() === 'mongodb') {
     dialect,
   } = sqlDbConfig;
 
-  // logging: false because sequelize by default log all DB activities in console which will unneccessarily flood the console.
+  // logging: false because sequelize by default log all DB activities in console which will unnecessarily flood the console.
   const sequelize = new Sequelize(name, username, password, {
     host,
     port,
