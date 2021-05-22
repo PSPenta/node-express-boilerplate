@@ -2,6 +2,7 @@
 const { compare } = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 
+const { jwt } = require('../config/serverConfig');
 const { responseMsg } = require('../helpers/utils');
 
 exports.jwtLogin = async (req, res) => {
@@ -17,8 +18,8 @@ exports.jwtLogin = async (req, res) => {
           // eslint-disable-next-line no-underscore-dangle
           userId: userData._id.toString()
         },
-        process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRE_IN || '1h' }
+        jwt.secret,
+        { expiresIn: jwt.expireIn }
       );
     }
     if (token) {

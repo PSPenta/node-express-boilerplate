@@ -1,5 +1,6 @@
 const { verify } = require('jsonwebtoken');
 
+const { jwt } = require('../config/serverConfig');
 const { responseMsg } = require('../helpers/utils');
 
 // eslint-disable-next-line consistent-return
@@ -11,7 +12,7 @@ exports.jwtAuth = (req, res, next) => {
       // const blacklistedToken = await model('Blacklist').findAll({ where: { token: token } });
       // eslint-disable-next-line no-undef
       if (!blacklistedToken) {
-        const decodedToken = verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        const decodedToken = verify(token, jwt.secret, (err, decoded) => {
           if (err) {
             console.error('JWT Error:', err);
             return res.status(440).json(responseMsg('Your login session is either expired or the token is invalid, please try logging in again!'));
