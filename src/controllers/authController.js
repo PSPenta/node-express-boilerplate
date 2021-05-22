@@ -17,7 +17,7 @@ exports.jwtLogin = async (req, res) => {
           // eslint-disable-next-line no-underscore-dangle
           userId: userData._id.toString()
         },
-        process.env.APP_KEY,
+        process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRE_IN || '1h' }
       );
     }
