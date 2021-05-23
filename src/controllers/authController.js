@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const { compare } = require('bcrypt');
+const { validationResult } = require('express-validator');
 const { sign } = require('jsonwebtoken');
 
 const { jwt } = require('../config/serverConfig');
@@ -7,6 +8,11 @@ const { responseMsg } = require('../helpers/utils');
 
 exports.jwtLogin = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json(responseMsg(errors.array()));
+    }
+
     // const userData = await model('User').findOne({ username: req.body.username });
     // const userData = await model('User').findAll({ where: { username: req.body.username } });
     // Note: If using Sequelize, update userData to userData[0] for all the following occurrences
