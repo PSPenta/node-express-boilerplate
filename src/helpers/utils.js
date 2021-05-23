@@ -54,7 +54,7 @@ exports.responseMsg = (errMsg, successStatus, data, paginated) => {
   }
 
   if (paginated) {
-    responseObj.data = data.docs;
+    responseObj.data = data.docs || data;
     responseObj.page = data.page || 1;
     responseObj.totalDocs = data.totalDocs || data.total;
     responseObj.limit = data.limit;
