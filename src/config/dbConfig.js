@@ -1,8 +1,13 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable max-len */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable global-require */
 const { readdirSync } = require('fs');
 const { dirname } = require('path');
 
 /** User define DB Credentials */
 const { db: { noSqlDbConfig, sqlDbConfig } } = require('./serverConfig');
+
 const database = process.env.DB_DRIVER || '';
 
 if (database.toLowerCase() === 'mongodb') {
@@ -17,27 +22,27 @@ if (database.toLowerCase() === 'mongodb') {
   // Open the mongoose connection to the database
   mongoose.connect(dbURI, {
     config: {
-      autoIndex: false,
+      autoIndex: false
     },
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   });
 
   // Db Connection
-  let db = mongoose.connection;
+  const db = mongoose.connection;
 
   db.on('connected', () => {
-    console.info('Mongoose connected to ' + dbURI);
-    readdirSync(dirname(require.main.filename) + '/src/models').forEach(file => require(dirname(require.main.filename) + '/src/models/' + file));
+    console.info(`Mongoose connected to ${dbURI}`);
+    readdirSync(`${dirname(require.main.filename)}/src/models`).forEach((file) => require(`${dirname(require.main.filename)}/src/models/${file}`));
   });
 
-  db.on('error', err => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`, '\033[37m'));
+  db.on('error', (err) => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`));
 
-  db.on('disconnected', () => console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected!', '\033[37m'));
+  db.on('disconnected', () => console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected!'));
 
   process.on('SIGINT', () => {
     db.close(() => {
-      console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected through app termination!', '\033[37m');
+      console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected through app termination!');
       process.exit(0);
     });
   });
@@ -53,10 +58,11 @@ if (database.toLowerCase() === 'mongodb') {
     password,
     host,
     port,
-    dialect,
+    dialect
   } = sqlDbConfig;
 
-  // logging: false because sequelize by default log all DB activities in console which will unnecessarily flood the console.
+  // logging: false because sequelize by default log all DB activities in console
+  // which will unnecessarily flood the console.
   const sequelize = new Sequelize(name, username, password, {
     host,
     port,
@@ -66,7 +72,7 @@ if (database.toLowerCase() === 'mongodb') {
       max: 5,
       min: 0,
       acquire: 30000,
-      idle: 10000,
+      idle: 10000
     },
     define: {
       timestamps: true,
@@ -77,10 +83,10 @@ if (database.toLowerCase() === 'mongodb') {
   sequelize
     .authenticate()
     .then(() => console.info(`Sequelize connection started on database "${name}" from "${dialect}"`))
-    .catch(err => console.error('\x1B[31m', `=> Sequelize connection error: ${err}`, '\033[37m'));
+    .catch((err) => console.error('\x1B[31m', `=> Sequelize connection error: ${err}`));
 
   process.on('SIGINT', () => {
-    console.warn('\x1b[33m%s\x1b[0m', '-> Sequelize disconnected through app termination!', '\033[37m');
+    console.warn('\x1b[33m%s\x1b[0m', '-> Sequelize disconnected through app termination!');
     process.exit(0);
   });
 
@@ -91,9 +97,9 @@ if (database.toLowerCase() === 'mongodb') {
    *
    * @return {Any} data which is given if it exists or False
    */
-  exports.model = model => require(`../models/${model}`)(sequelize, Sequelize);
+  exports.model = (model) => require(`../models/${model}`)(sequelize, Sequelize);
 
-  /**** Establishing Relationships */
+  /** ** Establishing Relationships */
   /** Sequelize One-To-One relationship */
   // this.model('User').hasOne(this.model('Profile'));
   // this.model('Profile').belongsTo(this.model('User'), { constraints: true, onDelete: 'CASCADE' });
@@ -105,15 +111,16 @@ if (database.toLowerCase() === 'mongodb') {
   /** Sequelize Many-To-Many relationship */
   // this.model('User').belongsToMany(this.model('Product'), { through: this.model('UserProducts'), constraints: true, onDelete: 'CASCADE' });
   // this.model('Product').belongsToMany(this.model('User'), { through: this.model('UserProducts'), constraints: true, onDelete: 'CASCADE' });
-  /**** Establishing Relationships */
+  /** ** Establishing Relationships */
 
   sequelize.sync()
-    .then(() => console.info(`Sequelize connection synced and relationships established.`))
-    .catch(err => console.error('\x1B[31m', err, '\033[37m'));
+    .then(() => console.info('Sequelize connection synced and relationships established.'))
+    .catch((err) => console.error('\x1B[31m', err));
 
   // Exported the database connection which is to be imported at the server
   exports.default = sequelize;
 } else {
-  console.warn('\x1b[33m%s\x1b[0m', '-> Application is running without database connection!', '\033[37m');
+  console.warn('\x1b[33m%s\x1b[0m', '-> Application is running without database connection!');
+  console.info('TPS');
   process.exit(0);
 }
