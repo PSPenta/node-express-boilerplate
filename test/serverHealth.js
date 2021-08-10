@@ -1,10 +1,10 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const { describe, it } = require('mocha');
+
 const server = require('../app');
 
-const {
-  expect
-} = chai;
+const { expect } = chai;
 chai.use(chaiHttp);
 
 // Test Suite
