@@ -33,7 +33,7 @@ config.client = process.env.CLIENT_URL || '*';
 /** Swagger Definition */
 config.swaggerDefinition = {
   info: {
-    title: 'Node Global Boilerplate',
+    title: 'Node Express Boilerplate',
     version: '1.0.0',
     description: ''
   },
