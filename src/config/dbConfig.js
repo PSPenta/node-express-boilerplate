@@ -121,6 +121,5 @@ if (database.toLowerCase() === 'mongodb') {
   exports.default = sequelize;
 } else {
   console.warn('\x1b[33m%s\x1b[0m', '-> Application is running without database connection!');
-  console.info('TPS');
   process.exit(0);
 }
