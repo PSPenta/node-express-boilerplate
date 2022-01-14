@@ -6,6 +6,12 @@
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
-  "eslint.validate": ["javascript"],
-  "eslint.workingDirectories": [{ "mode": "auto" }]
+  "eslint.validate": [
+    "javascript"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ]
 }

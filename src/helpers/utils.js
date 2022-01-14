@@ -61,7 +61,7 @@ exports.responseMsg = (errMsg, successStatus, data, paginated) => {
     responseObj.totalPages = data.totalPages || data.pages;
     responseObj.hasPrevPage = data.hasPrevPage || (data.page > 1);
     responseObj.hasNextPage = data.hasNextPage || (!!(!data.page || data.page < data.pages));
-    responseObj.prevPage = data.prevPage || (data.page > 1 ? data.page : null);
+    responseObj.prevPage = data.prevPage || (data.page > 1 ? (data.page - 1) : null);
     responseObj.nextPage = data.nextPage || (
       !data.page
       || data.page < data.pages ? (data.page || 2) : null
