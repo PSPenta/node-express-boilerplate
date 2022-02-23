@@ -33,7 +33,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 
 /**
  * @name helmet
- * @description This middleware helps you secure your Express apps by setting various HTTP headers.
+ * @description This middleware helps you secure your Express app by setting various HTTP headers.
  * Set some special response headers using helmet
  * For further information: https://www.npmjs.com/package/helmet
  */
