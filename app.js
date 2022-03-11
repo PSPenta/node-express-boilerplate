@@ -71,7 +71,7 @@ app.use(require('xss-clean')());
  * This middleware can be used to enable CORS with various options.
  * For further information: https://www.npmjs.com/package/cors
  */
-app.use(require('cors')({ origin: process.env.CLIENT_URL }));
+app.use(require('cors')({ origin: process.env.CLIENT_URL || '*' }));
 
 /** Form encryption application/x-www-form-urlencoded */
 app.use(urlencoded({ limit: '50mb', extended: false }));
