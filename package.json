@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app",
-    "pretest": "npm run lint",
-    "test": "mocha --timeout 10000 --exit",
     "lint": "./node_modules/.bin/eslint --fix",
     "lint-staged": "lint-staged",
+    "pretest": "npm run lint",
+    "start": "nodemon app",
+    "test": "mocha 'tests/**/*.js' --timeout 10000 --exit",
     "update:packages": "npm install --save-dev npm-check-updates && ncu -u && npm update"
   },
   "author": "",
