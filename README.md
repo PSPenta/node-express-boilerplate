@@ -9,46 +9,46 @@ _version:-_ `>= v10.16.3`
 ### Development Setup :-
 1. Clone the repository and install dependencies
 	 ```bash
-	 $ git clone https://github.com/PSPenta/node-express-boilerplate.git
-	 $ npm install ( If wants to work with existing version of packages )
-	 $ npm run update:packages ( If wants to work with latest version of packages )
+	 git clone https://github.com/PSPenta/node-express-boilerplate.git
+	 npm install ( If wants to work with existing version of packages )
+	 npm run update:packages ( If wants to work with latest version of packages )
 	```
 2. To start with database configuration create *.env* file from referencing the *env.example* file.
 	**For MongoDB install [Mongoose](https://mongoosejs.com/) package**
 	```bash
-	$ npm i -S mongoose mongoose-aggregate-paginate-v2
+	npm i -S mongoose mongoose-aggregate-paginate-v2
 	```
 
 	**For SQL DB install [Sequelize](https://sequelize.org/v5/) package**
 	```bash
-	$ npm i -S sequelize sequelize-paginate
+	npm i -S sequelize sequelize-paginate
 	```
 
 	**Sequelize supports multiple dialects for RDBMS**
 	**One of the following command with respect to database:**
 	```bash
-	$ npm install --save pg pg-hstore 	# postgres dialect
-	$ npm install --save mysql2 		# mysql dialect
-	$ npm install --save mariadb 		# mariadb dialect
-	$ npm install --save sqlite3 		# sqlite dialect
-	$ npm install --save tedious 		# mssql dialect
+	npm install --save pg pg-hstore 	# postgres dialect
+	npm install --save mysql2 		# mysql dialect
+	npm install --save mariadb 		# mariadb dialect
+	npm install --save sqlite3 		# sqlite dialect
+	npm install --save tedious 		# mssql dialect
 	```
 3. After that, if using Sequelize, create database to complete the DB connection. *(if you want to use DB migrations, you can use [sequelize-cli](https://sequelize.org/master/manual/migrations.html) as a dev dependency)*
 	```bash
-	$ npm install --save-dev sequelize-cli
+	npm install --save-dev sequelize-cli
 	```
 
 4. To run tests
 	```bash
-	$ npm test
+	npm test
 	```
 5. Start the application
 	```bash
-	$ npm start
+	npm start
 	```
 5. To test code against linting standards
 	```bash
-	$ npm run lint
+	npm run lint
 	```
 
 ### Local Authentication Service Setup
