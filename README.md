@@ -48,7 +48,7 @@ _version:-_ `>= v10.16.3`
 	```
 5. To test code against linting standards
 	```bash
-	$ npm run lint <file_name>
+	$ npm run lint
 	```
 
 ### Local Authentication Service Setup
