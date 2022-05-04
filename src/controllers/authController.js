@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const { compare } = require('bcrypt');
 const { validationResult } = require('express-validator');
+const { StatusCodes } = require('http-status-codes');
 const { sign } = require('jsonwebtoken');
 
 const { jwt } = require('../config/serverConfig');
@@ -10,7 +11,7 @@ exports.jwtLogin = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json(responseMsg(errors.array()));
+      return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(responseMsg(errors.array()));
     }
 
     // const userData = await model('User').findOne({ username: req.body.username });
@@ -31,10 +32,10 @@ exports.jwtLogin = async (req, res) => {
     if (token) {
       return res.json(responseMsg(null, true, { token }));
     }
-    return res.status(404).json(responseMsg('User not found!'));
+    return res.status(StatusCodes.BAD_REQUEST).json(responseMsg('User not found!'));
   } catch (error) {
     console.error(error);
-    return res.status(500).json(responseMsg('Something went wrong!'));
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseMsg('Something went wrong!'));
   }
 };
 
@@ -50,9 +51,9 @@ exports.jwtLogout = async (req, res) => {
       }
       return res.json(responseMsg(null, true, 'Successfully logged out!'));
     }
-    return res.status(401).json(responseMsg('Not authenticated!'));
+    return res.status(StatusCodes.UNAUTHORIZED).json(responseMsg('You are not authorized to access this page!'));
   } catch (error) {
     console.error(error);
-    return res.status(500).json(responseMsg('Something went wrong!'));
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseMsg('Something went wrong!'));
   }
 };

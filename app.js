@@ -5,6 +5,7 @@ const { urlencoded, json: bodyParserJson } = require('body-parser');
 const express = require('express');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
+const { StatusCodes } = require('http-status-codes');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
@@ -117,7 +118,7 @@ app.use(
 app.use('/api', require('./src/routes/routes'));
 
 /** Handling invalid route */
-app.use('/', (req, res) => res.status(404).json(responseMsg('Route not found!')));
+app.use('/', (req, res) => res.status(StatusCodes.NOT_FOUND).json(responseMsg('Route not found!')));
 
 /** Listening to port */
 app.listen(app.get('port'), () => console.info(`Find the server at port:${app.get('port')}`));

@@ -1,3 +1,4 @@
+const { StatusCodes } = require('http-status-codes');
 const { verify } = require('jsonwebtoken');
 
 const { jwt } = require('../config/serverConfig');
@@ -15,7 +16,7 @@ exports.jwtAuth = (req, res, next) => {
         const decodedToken = verify(token, jwt.secret, (err, decoded) => {
           if (err) {
             console.error('JWT Error:', err);
-            return res.status(440).json(responseMsg('Your login session is either expired or the token is invalid, please try logging in again!'));
+            return res.status(StatusCodes.UNAUTHORIZED).json(responseMsg('Your login session is either expired or the token is invalid, please try logging in again!'));
           }
           return decoded;
         });
@@ -23,16 +24,16 @@ exports.jwtAuth = (req, res, next) => {
           req.userId = decodedToken.userId;
           next();
         } else {
-          return res.status(401).json(responseMsg('Invalid token!'));
+          return res.status(StatusCodes.UNAUTHORIZED).json(responseMsg('You are not authorized to access this page!'));
         }
       } else {
-        return res.status(401).json(responseMsg('Token invalid!'));
+        return res.status(StatusCodes.UNAUTHORIZED).json(responseMsg('You are not authorized to access this page!'));
       }
     } else {
-      return res.status(401).json(responseMsg('Not authenticated!'));
+      return res.status(StatusCodes.UNAUTHORIZED).json(responseMsg('You are not authorized to access this page!'));
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json(responseMsg('Internal server error!'));
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseMsg('Internal server error!'));
   }
 };
