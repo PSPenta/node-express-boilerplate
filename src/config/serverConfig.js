@@ -33,8 +33,8 @@ config.client = process.env.CLIENT_URL || '*';
 /** Swagger Definition */
 config.swaggerDefinition = {
   info: {
-    title: 'Node Express Boilerplate',
-    version: '1.0.0',
+    title: process.env.APP_TITLE || 'Test Swagger Definition',
+    version: process.env.APP_VERSION || '0.0.0',
     description: ''
   },
   host: process.env.HOST || 'localhost:8000',
