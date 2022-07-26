@@ -9,7 +9,7 @@
     "pretest": "npm run lint",
     "start": "nodemon app",
     "test": "mocha 'tests/**/*.js' --timeout 10000 --exit",
-    "update:packages": "npm install --save-dev npm-check-updates && ncu -u && npm update"
+    "update:packages": "npm install --save-dev npm-check-updates && ncu -u && npm update && npm uninstall npm-check-updates && npm i"
   },
   "author": "",
   "license": "ISC",
