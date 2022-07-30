@@ -11,6 +11,7 @@ const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
 
 const { swaggerDefinition, swaggerOptions } = require('./src/config/serverConfig');
+const redisClient = require('./src/config/redisConfig');
 const { response } = require('./src/helpers/utils');
 
 const app = express();
@@ -100,6 +101,9 @@ app.use(express.static(join(__dirname, 'src/public')));
 
 /** Importing database connection when server starts */
 require('./src/config/dbConfig');
+
+/** Importing redis connection when server starts */
+redisClient.connect();
 
 /**
  * @name Swagger Documentation
