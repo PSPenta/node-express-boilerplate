@@ -1,19 +1,13 @@
 /* eslint-disable no-undef */
 const { compare } = require('bcrypt');
-const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
 const { sign } = require('jsonwebtoken');
 
 const { jwt } = require('../config/serverConfig');
-const { responseMsg } = require('../helpers/utils');
+const { response } = require('../helpers/utils');
 
 exports.jwtLogin = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json(responseMsg(errors.array()));
-    }
-
     // const userData = await model('User').findOne({ username: req.body.username });
     // const userData = await model('User').findAll({ where: { username: req.body.username } });
     // Note: If using Sequelize, update userData to userData[0] for all the following occurrences
@@ -30,12 +24,12 @@ exports.jwtLogin = async (req, res) => {
       );
     }
     if (token) {
-      return res.json(responseMsg(null, true, { token }));
+      return res.json(response(null, true, { token }));
     }
-    return res.status(StatusCodes.BAD_REQUEST).json(responseMsg('User not found!'));
+    return res.status(StatusCodes.BAD_REQUEST).json(response('User not found!'));
   } catch (error) {
     console.error(error);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseMsg('Something went wrong!'));
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response('Something went wrong!'));
   }
 };
 
@@ -49,11 +43,11 @@ exports.jwtLogout = async (req, res) => {
           user: req.userId
         });
       }
-      return res.json(responseMsg(null, true, 'Successfully logged out!'));
+      return res.json(response(null, true, 'Successfully logged out!'));
     }
-    return res.status(StatusCodes.UNAUTHORIZED).json(responseMsg('You are not authorized to access this page!'));
+    return res.status(StatusCodes.UNAUTHORIZED).json(response('You are not authorized to access this page!'));
   } catch (error) {
     console.error(error);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(responseMsg('Something went wrong!'));
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response('Something went wrong!'));
   }
 };

@@ -11,7 +11,7 @@ const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
 
 const { swaggerDefinition, swaggerOptions } = require('./src/config/serverConfig');
-const { responseMsg } = require('./src/helpers/utils');
+const { response } = require('./src/helpers/utils');
 
 const app = express();
 
@@ -118,7 +118,7 @@ app.use(
 app.use('/api', require('./src/routes/routes'));
 
 /** Handling invalid route */
-app.use('/', (req, res) => res.status(StatusCodes.NOT_FOUND).json(responseMsg('Route not found!')));
+app.use('/', (req, res) => res.status(StatusCodes.NOT_FOUND).json(response('Route not found!')));
 
 /** Listening to port */
 app.listen(app.get('port'), () => console.info(`Find the server at port:${app.get('port')}`));

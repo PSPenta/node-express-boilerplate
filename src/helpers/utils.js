@@ -42,7 +42,7 @@ exports.checkIfDataExists = (data) => {
  *
  * @returns {Object}
  */
-exports.responseMsg = (errMsg, successStatus, data, paginated) => {
+exports.response = (errMsg, successStatus, data, paginated) => {
   const responseObj = {
     success: successStatus || false,
     error: errMsg || null,

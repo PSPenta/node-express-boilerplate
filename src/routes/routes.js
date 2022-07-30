@@ -47,6 +47,7 @@ router.post(
       .matches(/^(?=.*\d)(?=.*[!@#$&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$&*]{8,15}$/, 'i')
       .withMessage('The password must contain at least 1 uppercase, 1 lowercase, 1 special character and 1 number!')
   ],
+  dependencies.middlewares.requestValidator.validateRequest,
   dependencies.controllers.authClient.jwtLogin
 );
 

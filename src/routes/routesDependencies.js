@@ -4,6 +4,7 @@ module.exports = {
     authClient: require('../controllers/authController')
   },
   middlewares: {
-    auth: require('../middlewares/auth')
+    auth: require('../middlewares/auth'),
+    requestValidator: require('../middlewares/validation')
   }
 };
