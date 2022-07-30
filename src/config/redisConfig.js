@@ -9,7 +9,7 @@ redisClient.on('error', (error) => {
 });
 
 redisClient.on('connect', () => {
-  console.info('redis server connected successfully!');
+  console.info('Redis server connected successfully!');
 });
 
 module.exports = redisClient;
