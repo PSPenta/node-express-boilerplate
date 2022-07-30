@@ -1,5 +1,6 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const { StatusCodes } = require('http-status-codes');
 const { describe, it } = require('mocha');
 
 const server = require('../app');
@@ -16,7 +17,7 @@ describe('Testing Server Health ', () => {
         console.error('err', err);
         done();
       }
-      expect(res.statusCode).to.equal(200);
+      expect(res.statusCode).to.equal(StatusCodes.OK);
       done();
     });
   });
