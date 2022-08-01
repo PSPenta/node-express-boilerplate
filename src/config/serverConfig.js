@@ -37,7 +37,7 @@ config.swaggerDefinition = {
     version: process.env.APP_VERSION || '0.0.0',
     description: ''
   },
-  host: process.env.HOST || 'localhost:8000',
+  host: process.env.APP_HOST || 'localhost:8000',
   basePath: '/api',
   securityDefinitions: {
     bearerAuth: {
