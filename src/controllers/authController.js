@@ -8,9 +8,11 @@ const { response } = require('../helpers/utils');
 
 exports.jwtLogin = async (req, res) => {
   try {
+    // Mongoose Query
     // const userData = await model('User').findOne({ username: req.body.username });
-    // const userData = await model('User').findAll({ where: { username: req.body.username } });
-    // Note: If using Sequelize, update userData to userData[0] for all the following occurrences
+
+    // Sequelize Query
+    // const userData = await model('User').findOne({ where: { username: req.body.username } });
     let token = '';
     if (userData && await compare(req.body.password, userData.password)) {
       token = sign(
