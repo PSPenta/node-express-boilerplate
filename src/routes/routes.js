@@ -2,6 +2,10 @@ const router = require('express').Router();
 const { check } = require('express-validator');
 
 const dependencies = require('./routesDependencies');
+const { response } = require('../helpers/utils');
+
+// Route for server Health Check
+router.get('/health', (req, res) => res.json(response(null, true, { success: true })));
 
 /**
  * @swagger
