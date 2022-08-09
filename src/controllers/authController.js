@@ -37,17 +37,18 @@ exports.jwtLogin = async (req, res) => {
 
 exports.jwtLogout = async (req, res) => {
   try {
-    if (req.headers.authorization) {
-      const token = req.headers.authorization.split(' ')[1];
-      if (token) {
-        await model('Blacklist').create({
-          token,
-          user: req.userId
-        });
-      }
-      return res.json(response(null, true, 'Successfully logged out!'));
+    if (!req.headers.authorization) {
+      return res.status(StatusCodes.UNAUTHORIZED).json(response('You are not authorized to access this page!'));
     }
-    return res.status(StatusCodes.UNAUTHORIZED).json(response('You are not authorized to access this page!'));
+
+    const token = req.headers.authorization.split(' ')[1];
+    if (token) {
+      await model('Blacklist').create({
+        token,
+        user: req.userId
+      });
+    }
+    return res.json(response(null, true, 'Successfully logged out!'));
   } catch (error) {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response('Something went wrong!'));
