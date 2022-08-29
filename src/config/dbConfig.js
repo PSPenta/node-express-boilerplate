@@ -96,7 +96,10 @@ if (database.toLowerCase() === 'mongodb') {
    *
    * @return {Any} data which is given if it exists or False
    */
-  exports.model = (model) => require(`../models/${model}`)(sequelize, Sequelize);
+  exports.model = (model) => {
+    const models = require(`${require.main.path}/src/models/_index`)(sequelize, Sequelize);
+    return models[model];
+  };
 
   /** ** Establishing Relationships */
   /** Sequelize One-To-One relationship */

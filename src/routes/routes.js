@@ -1,8 +1,10 @@
+/* eslint-disable import/no-dynamic-require */
 const router = require('express').Router();
 const { check } = require('express-validator');
 
 const dependencies = require('./routesDependencies');
-const { response } = require('../helpers/utils');
+
+const { response } = require(`${require.main.path}/src/helpers/utils`);
 
 // Route for server Health Check
 router.get('/health', (req, res) => res.json(response(null, true, { success: true })));

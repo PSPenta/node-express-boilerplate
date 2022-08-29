@@ -1,10 +1,11 @@
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable no-undef */
 const { compare } = require('bcrypt');
 const { StatusCodes } = require('http-status-codes');
 const { sign } = require('jsonwebtoken');
 
-const { jwt } = require('../config/serverConfig');
-const { response } = require('../helpers/utils');
+const { jwt } = require(`${require.main.path}/src/config/serverConfig`);
+const { response } = require(`${require.main.path}/src//helpers/utils`);
 
 exports.jwtLogin = async (req, res) => {
   try {

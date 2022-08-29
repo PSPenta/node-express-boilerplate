@@ -1,6 +1,8 @@
+/* eslint-disable import/no-dynamic-require */
 const { validationResult } = require('express-validator');
 const { StatusCodes } = require('http-status-codes');
-const { response } = require('../helpers/utils');
+
+const { response } = require(`${require.main.path}/src/helpers/utils`);
 
 // eslint-disable-next-line consistent-return
 exports.validateRequest = (req, res, next) => {

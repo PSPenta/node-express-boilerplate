@@ -1,8 +1,9 @@
+/* eslint-disable import/no-dynamic-require */
 const { StatusCodes } = require('http-status-codes');
 const { verify } = require('jsonwebtoken');
 
-const { jwt } = require('../config/serverConfig');
-const { response } = require('../helpers/utils');
+const { jwt } = require(`${require.main.path}/src/config/serverConfig`);
+const { response } = require(`${require.main.path}/src/helpers/utils`);
 
 // eslint-disable-next-line consistent-return
 exports.jwtAuth = async (req, res, next) => {
