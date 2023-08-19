@@ -33,20 +33,25 @@ _version:-_ `>= v10.16.3`
 	npm install --save sqlite3 		# sqlite dialect
 	npm install --save tedious 		# mssql dialect
 	```
-3. After that, if using Sequelize, create database to complete the DB connection. *(if you want to use DB migrations, you can use [sequelize-cli](https://sequelize.org/master/manual/migrations.html) as a dev dependency)*
+3. After that, if using Sequelize, create database to complete the DB connection.
+4. If you want to use DB migrations, you can use [sequelize-cli](https://sequelize.org/master/manual/migrations.html) as a dev dependency
 	```bash
 	npm install --save-dev sequelize-cli
 	```
-
-4. To run tests
+5. Otherwise if you have all the tables already created and you want to import them all at once, you can use *sequelize-auto* module
+	```bash
+	npm install sequelize-auto
+	node src/scripts/createModels.js
+	```
+6. To run tests
 	```bash
 	npm test
 	```
-5. Start the application
+7. Start the application
 	```bash
 	npm start
 	```
-5. To test code against linting standards
+8. To test code against linting standards
 	```bash
 	npm run lint
 	```
