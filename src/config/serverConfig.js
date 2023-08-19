@@ -16,9 +16,28 @@ const sqlDbConfig = {
   name: process.env.DB_NAME || 'myDB'
 };
 
+const sqlMasterDbConfig = {
+  hostMaster: process.env.MASTER_DB_HOST || 'localhost',
+  portMaster: process.env.MASTER_DB_PORT || '3306',
+  usernameMaster: process.env.MASTER_DB_USER || 'root',
+  passwordMaster: process.env.MASTER_DB_PASS || '',
+  nameMaster: process.env.MASTER_DB_NAME || 'myDB',
+  dialect: process.env.DB_DIALECT || 'mysql'
+};
+
+const sqlSlaveDbConfig = {
+  hostSlave: process.env.SLAVE_DB_HOST || 'localhost',
+  portSlave: process.env.SLAVE_DB_PORT || '3306',
+  usernameSlave: process.env.SLAVE_DB_USER || 'root',
+  passwordSlave: process.env.SLAVE_DB_PASS || '',
+  nameSlave: process.env.SLAVE_DB_NAME || 'myDB'
+};
+
 config.db = {
   noSqlDbConfig,
-  sqlDbConfig
+  sqlDbConfig,
+  sqlMasterDbConfig,
+  sqlSlaveDbConfig
 };
 
 /** JWT Authentication Credentials */

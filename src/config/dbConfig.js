@@ -1,11 +1,17 @@
 /* eslint-disable import/no-dynamic-require */
-/* eslint-disable import/no-unresolved */
 /* eslint-disable global-require */
 const { readdirSync } = require('fs');
 const { dirname } = require('path');
 
 /** User define DB Credentials */
-const { db: { noSqlDbConfig, sqlDbConfig } } = require('./serverConfig');
+const {
+  db: {
+    noSqlDbConfig,
+    sqlDbConfig,
+    sqlMasterDbConfig,
+    sqlSlaveDbConfig
+  }
+} = require('./serverConfig');
 
 const database = process.env.DB_DRIVER || '';
 
@@ -28,29 +34,30 @@ if (database.toLowerCase() === 'mongodb') {
   });
 
   // Db Connection
-  const db = mongoose.connection;
+  const Mongoose = mongoose.connection;
 
-  db.on('connected', () => {
+  Mongoose.on('connected', () => {
     console.info(`Mongoose connected to ${dbURI}`);
     readdirSync(`${dirname(require.main.filename)}/src/models`).forEach((file) => require(`${dirname(require.main.filename)}/src/models/${file}`));
   });
 
-  db.on('error', (err) => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`));
+  Mongoose.on('error', (err) => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`));
 
-  db.on('disconnected', () => console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected!'));
+  Mongoose.on('disconnected', () => console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected!'));
 
   process.on('SIGINT', () => {
-    db.close(() => {
+    Mongoose.close(() => {
       console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected through app termination!');
       process.exit(0);
     });
   });
 
   // Exported the database connection which is to be imported at the server
-  exports.default = db;
+  exports.default = Mongoose;
 } else if (database.toLowerCase() === 'sql') {
   // Bring in the sequelize module
   const Sequelize = require('sequelize');
+
   const {
     name,
     username,
@@ -60,16 +67,15 @@ if (database.toLowerCase() === 'mongodb') {
     dialect
   } = sqlDbConfig;
 
-  // logging: false because sequelize by default log all DB activities in console
-  // which will unnecessarily flood the console.
   const sequelize = new Sequelize(name, username, password, {
     host,
     port,
     dialect,
     logging: false,
+    // Logging false to keep the console clean (change it to true to print all queries in console).
     pool: {
       max: 5,
-      min: 0,
+      min: 1,
       acquire: 30000,
       idle: 10000
     },
@@ -78,6 +84,64 @@ if (database.toLowerCase() === 'mongodb') {
       underscored: true
     }
   });
+
+  /** If have separate master and slave DBs, use following setting instead of the above one. */
+  /*
+  const {
+    nameMaster,
+    usernameMaster,
+    passwordMaster,
+    hostMaster,
+    portMaster,
+    dialect
+  } = sqlMasterDbConfig;
+
+  const {
+    nameSlave,
+    usernameSlave,
+    passwordSlave,
+    hostSlave,
+    portSlave
+  } = sqlSlaveDbConfig;
+
+  const sequelize = new Sequelize({
+    dialect,
+    logging: true,
+    replication: {
+      write: {
+        host: hostMaster,
+        username: usernameMaster,
+        password: passwordMaster,
+        database: nameMaster,
+        port: portMaster,
+        pool: {
+          max: 30,
+          min: 5,
+          idle: 10000
+        }
+      },
+      read: [
+        {
+          host: hostSlave,
+          username: usernameSlave,
+          password: passwordSlave,
+          database: nameSlave,
+          port: portSlave,
+          pool: {
+            max: 20,
+            min: 2,
+            idle: 10000
+          }
+        }
+      ]
+    },
+    define: {
+      timestamps: true,
+      freezeTableName: false,
+      underscored: true
+    }
+  });
+  */
 
   sequelize
     .authenticate()
