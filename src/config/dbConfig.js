@@ -20,8 +20,7 @@ const database = process.env.DB_DRIVER || '';
 if (database.toLowerCase() === 'mongodb') {
   // Bring in the mongoose module
   const mongoose = require('mongoose');
-  const { url, name } = noSqlDbConfig;
-  const dbURI = url + name;
+  const { url: dbURI } = noSqlDbConfig;
 
   // console to check what is the dbURI refers to
   console.info('Database URL is => ', dbURI);
@@ -37,12 +36,12 @@ if (database.toLowerCase() === 'mongodb') {
 
   /** Mongoose replicaSet setup */
   /*
-  const { url1, url2, url3, name } = noSqlReplicaSetDbConfig;
+  const { url1, url2, url3 } = noSqlReplicaSetDbConfig;
 
   mongoose.connect([
-    url1 + name,    // By default the first DB would be considered as primary i.e. the write DB.
-    url2 + name,
-    url3 + name
+    url1,           // By default the first DB would be considered as master node i.e. the write DB.
+    url2,           // Rest others will be the read replicas until the master is up running.
+    url3            // If master goes down, the next in sequence will become master.
   ], {
     config: {
       autoIndex: false
