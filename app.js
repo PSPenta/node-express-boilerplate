@@ -61,7 +61,7 @@ app.use(require('express-status-monitor')());
 /**
  * @name xss-clean
  * @description This middleware will sanitize user input
- * coming from POST body, GET queries, and url params.
+ * coming from POST body, GET queries, and url params (cross site scripting).
  * This will sanitize any data in req.body, req.query, and req.params.
  * For further information: https://www.npmjs.com/package/xss-clean
  */
@@ -83,8 +83,8 @@ app.use(bodyParserJson({ limit: '50mb' }));
 
 /** Express Rate Limit for DOS attack prevention */
 app.use(rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 100 // limit each IP to 100 requests per windowMs
+  windowMs: process.env.APP_RATE_LIMIT || 1 * 60 * 1000, // 1 minute
+  max: process.env.APP_RATE_PER_LIMIT || 100 // limit each IP to 100 requests per windowMs
 }));
 
 /** ** Best practices app settings */
@@ -92,8 +92,8 @@ app.set('port', process.env.APP_PORT || 8000);
 app.set('app URL', process.env.APP_URL || 'localhost:8000');
 app.set('title', process.env.APP_NAME);
 app.set('query parser', 'extended');
-app.enable('etag'); // use strong etags
-app.set('etag', 'strong');
+app.enable('etag');
+app.set('etag', 'strong'); // use strong etags
 /** ** Best practices app settings */
 
 /** serve static files */
