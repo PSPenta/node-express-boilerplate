@@ -6,6 +6,13 @@ const noSqlDbConfig = {
   name: process.env.DB_NAME || 'myDB'
 };
 
+const noSqlReplicaSetDbConfig = {
+  url1: process.env.DB_URL || 'mongodb://localhost:27017/',
+  url2: process.env.DB_URL || 'mongodb://localhost:27017/',
+  url3: process.env.DB_URL || 'mongodb://localhost:27017/',
+  name: process.env.DB_NAME || 'myDB'
+};
+
 /** sql connection configuration */
 const sqlDbConfig = {
   username: process.env.DB_USERNAME || 'root',
@@ -36,8 +43,10 @@ const sqlSlaveDbConfig = {
 config.db = {
   noSqlDbConfig,
   sqlDbConfig,
+
   sqlMasterDbConfig,
-  sqlSlaveDbConfig
+  sqlSlaveDbConfig,
+  noSqlReplicaSetDbConfig
 };
 
 /** JWT Authentication Credentials */

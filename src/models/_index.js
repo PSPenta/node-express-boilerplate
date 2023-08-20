@@ -11,17 +11,34 @@ exports.initModels = (sequelize, { DataTypes }) => {
   user.hasMany(blacklist, { foreignKey: 'userId' });
   blacklist.belongsTo(user, { foreignKey: 'userId' });
 
-  /**
-   * Attach your own custom properties and functions like below
-   * If a table needs too many such custom functions,
-   * add those in a file named, <model name>.helper.js and import it
-   */
-  // shopOrder.getRandom = (count = 1) =>
-  // shopOrder.findAll({
-  // raw: true,
-  //   order: sequelize.literal("rand()"),
-  //   limit: count
+  /** ** Example Relationships */
+  /** Sequelize One-To-One relationship */
+  // user.hasOne(profile, { foreignKey: 'userId' });
+  // profile.belongsTo(user, {
+  //   constraints: true,
+  //   onDelete: 'CASCADE',
+  //   foreignKey: 'userId'
   // });
+
+  /** Sequelize One-To-Many relationship */
+  // user.hasMany(product);
+  // product.belongsTo(user, {
+  //   constraints: true,
+  //   onDelete: 'CASCADE'
+  // });
+
+  /** Sequelize Many-To-Many relationship */
+  // user.belongsToMany(product, {
+  //   through: this.model('UserProducts'),
+  //   constraints: true,
+  //   onDelete: 'CASCADE'
+  // });
+  // product.belongsToMany(user, {
+  //   through: this.model('UserProducts'),
+  //   constraints: true,
+  //   onDelete: 'CASCADE'
+  // });
+  /** ** Example Relationships */
 
   return {
     blacklist,

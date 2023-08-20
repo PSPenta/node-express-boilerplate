@@ -7,9 +7,11 @@ const { dirname } = require('path');
 const {
   db: {
     noSqlDbConfig,
-    sqlDbConfig,
-    sqlMasterDbConfig,
-    sqlSlaveDbConfig
+    sqlDbConfig
+
+    // sqlMasterDbConfig,
+    // sqlSlaveDbConfig,
+    // noSqlReplicaSetDbConfig
   }
 } = require('./serverConfig');
 
@@ -32,6 +34,23 @@ if (database.toLowerCase() === 'mongodb') {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
+
+  /** Mongoose replicaSet setup */
+  /*
+  const { url1, url2, url3, name } = noSqlReplicaSetDbConfig;
+
+  mongoose.connect([
+    url1 + name,    // By default the first DB would be considered as primary i.e. the write DB.
+    url2 + name,
+    url3 + name
+  ], {
+    config: {
+      autoIndex: false
+    },
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+  */
 
   // Db Connection
   const Mongoose = mongoose.connection;
@@ -164,34 +183,6 @@ if (database.toLowerCase() === 'mongodb') {
     const models = require(`${require.main.path}/src/models/_index`)(sequelize, Sequelize);
     return models[model];
   };
-
-  /** ** Establishing Relationships */
-  /** Sequelize One-To-One relationship */
-  // this.model('User').hasOne(this.model('Profile'));
-  // this.model('Profile').belongsTo(this.model('User'), {
-  //   constraints: true,
-  //   onDelete: 'CASCADE'
-  // });
-
-  /** Sequelize One-To-Many relationship */
-  // this.model('User').hasMany(this.model('Product'));
-  // this.model('Product').belongsTo(this.model('User'), {
-  //   constraints: true,
-  //   onDelete: 'CASCADE'
-  // });
-
-  /** Sequelize Many-To-Many relationship */
-  // this.model('User').belongsToMany(this.model('Product'), {
-  //   through: this.model('UserProducts'),
-  //   constraints: true,
-  //   onDelete: 'CASCADE'
-  // });
-  // this.model('Product').belongsToMany(this.model('User'), {
-  //   through: this.model('UserProducts'),
-  //   constraints: true,
-  //   onDelete: 'CASCADE'
-  // });
-  /** ** Establishing Relationships */
 
   sequelize.sync()
     .then(() => console.info('Sequelize connection synced and relationships established.'))
