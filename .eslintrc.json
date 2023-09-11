@@ -14,38 +14,17 @@
     "ecmaVersion": 12
   },
   "rules": {
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
+    "comma-dangle": ["error", "never"],
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
     "no-console": [
       "error",
       {
-        "allow": [
-          "error",
-          "info",
-          "warn"
-        ]
+        "allow": ["error", "info", "warn"]
       }
     ],
-    "no-multi-spaces": [
-      "error"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+    "no-multi-spaces": ["error"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"]
   }
 }

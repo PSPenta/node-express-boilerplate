@@ -82,10 +82,12 @@ app.use(urlencoded({ limit: '50mb', extended: false }));
 app.use(bodyParserJson({ limit: '50mb' }));
 
 /** Express Rate Limit for DOS attack prevention */
-app.use(rateLimit({
-  windowMs: process.env.APP_RATE_LIMIT || 1 * 60 * 1000, // 1 minute
-  max: process.env.APP_RATE_PER_LIMIT || 100 // limit each IP to 100 requests per windowMs
-}));
+app.use(
+  rateLimit({
+    windowMs: process.env.APP_RATE_LIMIT || 1 * 60 * 1000, // 1 minute
+    max: process.env.APP_RATE_PER_LIMIT || 100 // limit each IP to 100 requests per windowMs
+  })
+);
 
 /** ** Best practices app settings */
 app.set('port', process.env.APP_PORT || 8000);
@@ -112,10 +114,13 @@ redisClient.connect();
 app.use(
   '/api/api-docs',
   swaggerUi.serve,
-  swaggerUi.setup(swaggerJsDoc({
-    swaggerDefinition,
-    apis: ['./src/routes/*.js']
-  }), swaggerOptions)
+  swaggerUi.setup(
+    swaggerJsDoc({
+      swaggerDefinition,
+      apis: ['./src/routes/*.js']
+    }),
+    swaggerOptions
+  )
 );
 
 /** Configuring Routes */

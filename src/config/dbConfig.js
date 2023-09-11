@@ -1,5 +1,7 @@
-/* eslint-disable import/no-dynamic-require */
+/* eslint-disable max-len */
 /* eslint-disable global-require */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-dynamic-require */
 const { readdirSync } = require('fs');
 const { dirname } = require('path');
 
@@ -33,6 +35,7 @@ if (database.toLowerCase() === 'mongodb') {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
+  /** Note: The dbURI can contain multiple URLs comma separated to form a default replica set configuration */
 
   /** Mongoose replicaSet setup */
   /*
@@ -56,7 +59,9 @@ if (database.toLowerCase() === 'mongodb') {
 
   Mongoose.on('connected', () => {
     console.info(`Mongoose connected to ${dbURI}`);
-    readdirSync(`${dirname(require.main.filename)}/src/models`).forEach((file) => require(`${dirname(require.main.filename)}/src/models/${file}`));
+    readdirSync(`${dirname(require.main.filename)}/src/models`).forEach(
+      (file) => require(`${dirname(require.main.filename)}/src/models/${file}`)
+    );
   });
 
   Mongoose.on('error', (err) => console.error('\x1B[31m', `=> Mongoose connection error: ${err}`));
@@ -65,7 +70,10 @@ if (database.toLowerCase() === 'mongodb') {
 
   process.on('SIGINT', () => {
     Mongoose.close(() => {
-      console.warn('\x1b[33m%s\x1b[0m', '-> Mongoose disconnected through app termination!');
+      console.warn(
+        '\x1b[33m%s\x1b[0m',
+        '-> Mongoose disconnected through app termination!'
+      );
       process.exit(0);
     });
   });
@@ -163,11 +171,16 @@ if (database.toLowerCase() === 'mongodb') {
 
   sequelize
     .authenticate()
-    .then(() => console.info(`Sequelize connection started on database "${name}" from "${dialect}"`))
+    .then(() => console.info(
+      `Sequelize connection started on database "${name}" from "${dialect}"`
+    ))
     .catch((err) => console.error('\x1B[31m', `=> Sequelize connection error: ${err}`));
 
   process.on('SIGINT', () => {
-    console.warn('\x1b[33m%s\x1b[0m', '-> Sequelize disconnected through app termination!');
+    console.warn(
+      '\x1b[33m%s\x1b[0m',
+      '-> Sequelize disconnected through app termination!'
+    );
     process.exit(0);
   });
 
@@ -179,17 +192,24 @@ if (database.toLowerCase() === 'mongodb') {
    * @return {Any} data which is given if it exists or False
    */
   exports.model = (model) => {
-    const models = require(`${require.main.path}/src/models/_index`)(sequelize, Sequelize);
+    const models = require(`${require.main.path}/src/models/_index`)(
+      sequelize,
+      Sequelize
+    );
     return models[model];
   };
 
-  sequelize.sync()
+  sequelize
+    .sync()
     .then(() => console.info('Sequelize connection synced and relationships established.'))
     .catch((err) => console.error('\x1B[31m', err));
 
   // Exported the database connection which is to be imported at the server
   exports.default = sequelize;
 } else {
-  console.warn('\x1b[33m%s\x1b[0m', '-> Application is running without database connection!');
+  console.warn(
+    '\x1b[33m%s\x1b[0m',
+    '-> Application is running without database connection!'
+  );
   process.exit(0);
 }
