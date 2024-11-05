@@ -59,7 +59,7 @@ router.post(
 
 /**
  * @swagger
- * /auth/logout:
+ * /logout:
  *  get:
  *    tags:
  *      - Authentication
