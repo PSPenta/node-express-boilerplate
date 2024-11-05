@@ -5,7 +5,7 @@ const { StatusCodes } = require('http-status-codes');
 const { sign } = require('jsonwebtoken');
 
 const { jwt } = require(`${require.main.path}/src/config/serverConfig`);
-const { response } = require(`${require.main.path}/src//helpers/utils`);
+const { response } = require(`${require.main.path}/src/helpers/utils`);
 
 exports.jwtLogin = async (req, res) => {
   try {
