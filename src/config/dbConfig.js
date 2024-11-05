@@ -31,9 +31,7 @@ if (database.toLowerCase() === 'mongodb') {
   mongoose.connect(dbURI, {
     config: {
       autoIndex: false
-    },
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    }
   });
   /** Note: The dbURI can contain multiple URLs comma separated to form a default replica set configuration */
 
