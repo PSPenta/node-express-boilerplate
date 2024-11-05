@@ -57,4 +57,35 @@ router.post(
   dependencies.controllers.authClient.jwtLogin
 );
 
+/**
+ * @swagger
+ * /auth/logout:
+ *  get:
+ *    tags:
+ *      - Authentication
+ *    name: Logout API
+ *    summary: This api terminates the login session of the user whose token is passed.
+ *    consumes:
+ *      - application/json
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: Param Data
+ *        in: param
+ *        schema:
+ *          type: object
+ *    responses:
+ *      200:
+ *        description: Success message.
+ *      403:
+ *        description: Unauthorized user.
+ *      500:
+ *        description: Internal server error.
+ */
+router.get(
+  '/logout',
+  dependencies.middlewares.auth.jwtAuth,
+  dependencies.controllers.authClient.jwtLogout
+);
+
 module.exports = router;
