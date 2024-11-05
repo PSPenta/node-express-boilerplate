@@ -10,7 +10,10 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 require('dotenv').config();
 
-const { swaggerDefinition, swaggerOptions } = require('./src/config/serverConfig');
+const {
+  swaggerDefinition,
+  swaggerOptions
+} = require('./src/config/serverConfig');
 const redisClient = require('./src/config/redisConfig');
 const { response } = require('./src/helpers/utils');
 
@@ -82,12 +85,14 @@ app.use(urlencoded({ limit: '50mb', extended: false }));
 app.use(bodyParserJson({ limit: '50mb' }));
 
 /** Express Rate Limit for DOS attack prevention */
-app.use(
-  rateLimit({
-    windowMs: process.env.APP_RATE_LIMIT || 1 * 60 * 1000, // 1 minute
-    max: process.env.APP_RATE_PER_LIMIT || 100 // limit each IP to 100 requests per windowMs
-  })
-);
+if (process.env.CAN_RATE_LIMIT) {
+  app.use(
+    rateLimit({
+      windowMs: process.env.APP_RATE_LIMIT || 1 * 60 * 1000, // 1 minute
+      max: process.env.APP_RATE_PER_LIMIT || 100 // limit each IP to 100 requests per windowMs
+    })
+  );
+}
 
 /** ** Best practices app settings */
 app.set('port', process.env.APP_PORT || 8000);
